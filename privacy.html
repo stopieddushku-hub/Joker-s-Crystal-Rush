@@ -61,16 +61,6 @@
     }
     .brand strong{font-size:13px}
     .brand small{display:block; color:var(--muted); font-family:var(--mono); font-size:11px; margin-top:2px}
-    nav{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
-    a.link{
-      text-decoration:none; color:var(--text);
-      font-size:13px;
-      padding:9px 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    a.link:hover{border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08)}
 
     main{max-width: var(--max); margin:0 auto; padding: 18px 16px 50px}
     .card{
@@ -113,38 +103,9 @@
       padding: 12px;
       word-break: break-word;
     }
-
-    .actions{
-      margin-top: 14px;
-      display:flex; flex-wrap:wrap; gap:10px;
-    }
-    button.btn, a.btn{
-      appearance:none; border:0; cursor:pointer;
-      border-radius: 16px;
-      padding: 12px 12px;
-      color: rgba(255,255,255,.92);
-      font-weight: 650;
-      font-size: 13px;
-      letter-spacing: .15px;
-      background: linear-gradient(135deg, rgba(0,212,255,.18), rgba(139,92,255,.18));
-      border: 1px solid rgba(255,255,255,.14);
-      display:inline-flex; align-items:center; gap:10px;
-      text-decoration:none;
-    }
-    button.btn.secondary, a.btn.secondary{
-      background: rgba(255,255,255,.06);
-    }
-    button.btn:hover, a.btn:hover{filter:brightness(1.06)}
-    .note{
-      margin-top: 10px;
-      font-size: 12px;
-      color: rgba(255,255,255,.62);
-      line-height:1.6;
-    }
     code{font-family:var(--mono); color: rgba(255,255,255,.85)}
   </style>
 </head>
-
 <body>
 <header>
   <div class="bar">
@@ -155,11 +116,6 @@
         <small>Joker’s Crystal Rush · Developer hub 975</small>
       </span>
     </a>
-    <nav>
-      <a class="link" href="index.html">Home</a>
-      <a class="link" href="support.html">Support</a>
-      <a class="link" href="marketing.html">Marketing</a>
-    </nav>
   </div>
 </header>
 
@@ -214,53 +170,12 @@
         Support email: stopieddushku@gmail.com<br/>
         Effective date: <span id="date"></span>
       </div>
-
-      <div class="actions">
-        <button class="btn" type="button" id="closeWebViewBtn">Close this page in the app</button>
-        <a class="btn secondary" href="mailto:stopieddushku@gmail.com?subject=Privacy%20Policy%20Question%20-%20Joker%E2%80%99s%20Crystal%20Rush">Ask a question</a>
-      </div>
-
-      <div class="note">
-        WebView close button: this page tries multiple safe bridges. In Android native code you can expose a JavaScript interface like
-        <code>Android.closeWebView()</code> (or <code>Android.close()</code>) and handle it by finishing the Activity that hosts the WebView.
-      </div>
     </div>
   </section>
 </main>
 
 <script>
   document.getElementById('date').textContent = new Date().toISOString().slice(0,10);
-
-  function requestCloseWebView(){
-    // Try common Android bridges. Your app can implement any of them.
-    try {
-      if (window.Android && typeof window.Android.closeWebView === 'function') {
-        window.Android.closeWebView();
-        return true;
-      }
-      if (window.Android && typeof window.Android.close === 'function') {
-        window.Android.close();
-        return true;
-      }
-      // Alternative: postMessage (for custom JS bridge)
-      if (window.ReactNativeWebView && typeof window.ReactNativeWebView.postMessage === 'function') {
-        window.ReactNativeWebView.postMessage(JSON.stringify({ type: "CLOSE_WEBVIEW" }));
-        return true;
-      }
-      // Generic postMessage
-      window.postMessage(JSON.stringify({ type: "CLOSE_WEBVIEW" }), "*");
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  document.getElementById('closeWebViewBtn').addEventListener('click', ()=>{
-    const ok = requestCloseWebView();
-    if(!ok){
-      alert('This page is opened in a browser. Please use the back button to exit.');
-    }
-  });
 </script>
 </body>
 </html>
