@@ -1,283 +1,227 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#0b0f1a" />
-
   <title>Privacy Policy — Joker’s Crystal Rush</title>
   <meta name="description" content="Privacy Policy for Joker’s Crystal Rush. No data collection, no tracking, no sharing." />
-
-
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
   <style>
-    :root{
-      --bg:#070a12;
-      --panel: rgba(255,255,255,.06);
-      --text: rgba(255,255,255,.9);
-      --muted: rgba(255,255,255,.65);
-      --border: rgba(255,255,255,.12);
-
-      --glow1:#8b5cff;
-      --glow2:#00d4ff;
-      --glow3:#ff3d9a;
-
-      --radius: 20px;
-      --shadow: 0 25px 80px rgba(0,0,0,.65);
-
+    :root {
+      --bg: #070a12;
+      --panel: rgba(255, 255, 255, .06);
+      --text: rgba(255, 255, 255, .88);
+      --muted: rgba(255, 255, 255, .66);
+      --border: rgba(255, 255, 255, .12);
+      --glow1: #8b5cff;
+      --glow2: #00d4ff;
+      --glow3: #ff3d9a;
+      --radius: 18px;
+      --shadow: 0 18px 55px rgba(0, 0, 0, .55);
+      --max: 980px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+    }
     
-      --max: 1400px;
-
-      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+    * {
+      box-sizing: border-box
     }
-
-    *{box-sizing:border-box}
-
-    body{
-      margin:0;
-      font-family:var(--sans);
-      color:var(--text);
-
-      background:
-        radial-gradient(1200px 700px at 10% 15%, rgba(139,92,255,.18), transparent 55%),
-        radial-gradient(900px 600px at 90% 20%, rgba(0,212,255,.16), transparent 55%),
-        radial-gradient(1000px 700px at 60% 90%, rgba(255,61,154,.12), transparent 55%),
-        linear-gradient(180deg, #060712, #070a12);
-
-      min-height:100vh;
+    
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--text);
+      background: radial-gradient(1200px 700px at 10% 15%, rgba(139, 92, 255, .18), transparent 55%), radial-gradient(900px 600px at 90% 20%, rgba(0, 212, 255, .16), transparent 55%), radial-gradient(1000px 700px at 60% 90%, rgba(255, 61, 154, .12), transparent 55%), linear-gradient(180deg, #060712, #070a12);
+      overflow-x: hidden;
     }
-
-    header{
-      position:sticky;
-      top:0;
-      z-index:10;
-
-      backdrop-filter: blur(14px);
-      background: rgba(7,10,18,.6);
-
-      border-bottom: 1px solid rgba(255,255,255,.08);
+    
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      background: linear-gradient(180deg, rgba(7, 10, 18, .86), rgba(7, 10, 18, .44));
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
     }
-
-    .bar{
+    
+    .bar {
       max-width: var(--max);
-      margin:0 auto;
-      padding: 16px 24px;
-
-      display:flex;
-      align-items:center;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
     }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-decoration:none;
-      color:var(--text);
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--text);
     }
-
-    .logo{
-      width:40px;
-      height:40px;
-      border-radius:14px;
-
-      background:
-        radial-gradient(circle at 30% 25%, rgba(255,255,255,.7), transparent 45%),
-        conic-gradient(from 210deg, var(--glow2), var(--glow1), var(--glow3), var(--glow2));
-
-      box-shadow: 0 0 0 1px rgba(255,255,255,.15),
-                  0 20px 40px rgba(0,0,0,.5);
+    
+    .logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, .7), transparent 45%), conic-gradient(from 210deg, var(--glow2), var(--glow1), var(--glow3), var(--glow2));
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .14), 0 15px 35px rgba(0, 0, 0, .45);
     }
-
-    .brand strong{
-      font-size:15px;
-      font-weight:600;
+    
+    .brand strong {
+      font-size: 13px
     }
-
-    .brand small{
-      display:block;
-      color:var(--muted);
-      font-size:12px;
-      margin-top:2px;
-    }
-
-    main{
-      max-width: var(--max);
-      margin:0 auto;
-
-      padding: 40px 24px 80px;
-    }
-
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: var(--radius);
-
-      backdrop-filter: blur(18px);
-      box-shadow: var(--shadow);
-
-      padding: 32px;
-    }
-
-    h1{
-      margin:0 0 14px;
-      font-size:32px;
-      font-weight:700;
-    }
-
-    p{
-      margin:0 0 20px;
+    
+    .brand small {
+      display: block;
       color: var(--muted);
-      line-height:1.7;
-      font-size:15px;
-      max-width: 800px;
+      font-family: var(--mono);
+      font-size: 11px;
+      margin-top: 2px
     }
-
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap:18px;
-      margin-top:24px;
-    }
-
     
-    @media (min-width: 1100px){
-      .grid{
-        grid-template-columns: repeat(4, 1fr);
+    main {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 18px 16px 50px
+    }
+    
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .07), rgba(255, 255, 255, .04));
+      border: 1px solid rgba(255, 255, 255, .10);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    
+    .inner {
+      padding: 18px
+    }
+    
+    h1 {
+      margin: 0 0 10px;
+      font-size: 22px;
+      letter-spacing: .2px
+    }
+    
+    p {
+      margin: 10px 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px
+    }
+    
+    .grid {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    
+    @media (max-width: 760px) {
+      .grid {
+        grid-template-columns: 1fr
       }
     }
-
-    @media (max-width: 700px){
-      .grid{
-        grid-template-columns: 1fr;
-      }
+    
+    .box {
+      border-radius: 16px;
+      padding: 14px;
+      background: rgba(0, 0, 0, .22);
+      border: 1px solid rgba(255, 255, 255, .10);
     }
-
-    .box{
-      padding:18px;
-      border-radius:18px;
-
-      background: rgba(0,0,0,.25);
-      border: 1px solid rgba(255,255,255,.08);
-
-      transition: all .25s ease;
+    
+    .box h2 {
+      margin: 0 0 6px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, .86);
     }
-
-    .box:hover{
-      transform: translateY(-4px);
-      border-color: rgba(255,255,255,.18);
-      box-shadow: 0 15px 35px rgba(0,0,0,.4);
+    
+    .box ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: rgba(255, 255, 255, .68);
+      font-size: 13px;
+      line-height: 1.6
     }
-
-    .box h2{
-      margin:0 0 10px;
-      font-size:15px;
-      font-weight:600;
+    
+    .meta {
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: rgba(255, 255, 255, .72);
+      background: rgba(0, 0, 0, .24);
+      border: 1px solid rgba(255, 255, 255, .10);
+      border-radius: 16px;
+      padding: 12px;
+      word-break: break-word;
     }
-
-    .box ul{
-      margin:0;
-      padding-left:18px;
-
-      color: rgba(255,255,255,.65);
-      font-size:14px;
-      line-height:1.6;
-    }
-
-    .meta{
-      margin-top:26px;
-      padding:16px;
-
-      border-radius:16px;
-
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.1);
-
-      font-size:13px;
-      color: rgba(255,255,255,.75);
-      line-height:1.6;
+    
+    code {
+      font-family: var(--mono);
+      color: rgba(255, 255, 255, .85)
     }
   </style>
 </head>
 
 <body>
-
-<header>
-  <div class="bar">
-    <a class="brand" href="index.html">
-      <span class="logo"></span>
-      <span>
-        <strong>Privacy Policy</strong>
-        <small>Joker’s Crystal Rush · Developer hub 975</small>
-      </span>
-    </a>
-  </div>
-</header>
-
-<main>
-  <section class="card">
-
-    <h1>Privacy Policy</h1>
-
-    <p>
-      Joker’s Crystal Rush is built with privacy as a default.
-      The app does not collect personal data and does not share data with third parties.
-    </p>
-
-    <div class="grid">
-
-      <div class="box">
-        <h2>Data collection</h2>
-        <ul>
-          <li>No personal data is collected</li>
-          <li>No analytics SDKs are used</li>
-          <li>No advertising SDKs are used</li>
-          <li>No tracking identifiers</li>
-        </ul>
-      </div>
-
-      <div class="box">
-        <h2>Data storage</h2>
-        <ul>
-          <li>No data is uploaded</li>
-          <li>Progress stored locally only</li>
-          <li>No accounts required</li>
-        </ul>
-      </div>
-
-      <div class="box">
-        <h2>Data sharing</h2>
-        <ul>
-          <li>No selling or sharing</li>
-          <li>No third parties</li>
-          <li>No cross-app tracking</li>
-        </ul>
-      </div>
-
-      <div class="box">
-        <h2>Contact</h2>
-        <ul>
-          <li>Developer: Developer hub 975</li>
-          <li>Email: stopieddushku@gmail.com</li>
-        </ul>
-      </div>
-
+  <header>
+    <div class="bar">
+      <a class="brand" href="index.html"> <span class="logo" aria-hidden="true"></span> <span> <strong>Privacy Policy</strong> <small>Joker’s Crystal Rush · Developer hub 975</small> </span> </a>
     </div>
-
-    <div class="meta">
-      Application: Joker’s Crystal Rush<br>
-      Developer: Developer hub 975<br>
-      Support: stopieddushku@gmail.com<br>
-      Effective date: <span id="date"></span>
-    </div>
-
-  </section>
-</main>
-
-<script>
-  document.getElementById('date').textContent =
-    new Date().toISOString().slice(0,10);
-</script>
-
+  </header>
+  <main>
+    <section class="card">
+      <div class="inner">
+        <h1>Privacy Policy</h1>
+        <p> Joker’s Crystal Rush is built with privacy as a default. The app does not collect personal data and does not share data with third parties. </p>
+        <div class="grid">
+          <div class="box">
+            <h2>Data collection</h2>
+            <ul>
+              <li>No personal data is collected.</li>
+              <li>No analytics SDKs are used.</li>
+              <li>No advertising SDKs are used.</li>
+              <li>No identifiers for tracking are created or stored.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h2>Data storage</h2>
+            <ul>
+              <li>No data is uploaded to servers.</li>
+              <li>Any game progress (if present) is stored locally on the device only.</li>
+              <li>No accounts are required.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h2>Data sharing</h2>
+            <ul>
+              <li>No data is sold, shared, or transferred to third parties.</li>
+              <li>No cross-app tracking.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h2>Contact</h2>
+            <ul>
+              <li>Developer: Developer hub 975</li>
+              <li>Email: stopieddushku@gmail.com</li>
+            </ul>
+          </div>
+        </div>
+        <div class="meta"> Application: Joker’s Crystal Rush
+          <br/> Developer: Developer hub 975
+          <br/> Support email: stopieddushku@gmail.com
+          <br/> Effective date: <span id="date"></span> </div>
+      </div>
+    </section>
+  </main>
+  <script>
+    document.getElementById('date').textContent = new Date().toISOString().slice(0, 10);
+  </script>
 </body>
+
 </html>
