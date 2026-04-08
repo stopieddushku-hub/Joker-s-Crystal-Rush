@@ -11,19 +11,24 @@
     :root{
       --bg:#070a12;
       --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
       --text: rgba(255,255,255,.88);
       --muted: rgba(255,255,255,.66);
       --border: rgba(255,255,255,.12);
       --glow1:#8b5cff;
       --glow2:#00d4ff;
       --glow3:#ff3d9a;
+      --ok:#35f2a6;
+      --warn:#ffd166;
       --radius: 18px;
       --shadow: 0 18px 55px rgba(0,0,0,.55);
-      --max: 980px;
+      --max: 1100px;
       --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
       --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
     }
+
     *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
       font-family:var(--sans);
@@ -32,116 +37,294 @@
         radial-gradient(1200px 700px at 10% 15%, rgba(139,92,255,.18), transparent 55%),
         radial-gradient(900px 600px at 90% 20%, rgba(0,212,255,.16), transparent 55%),
         radial-gradient(1000px 700px at 60% 90%, rgba(255,61,154,.12), transparent 55%),
-        linear-gradient(180deg, #060712, #070a12);
+        linear-gradient(180deg, #060712, #050812 35%, #070a12);
       overflow-x:hidden;
     }
+
+    .topline{
+      position:fixed; inset:0 0 auto 0; height:1px; z-index:20;
+      background: linear-gradient(90deg, transparent, rgba(0,212,255,.55), rgba(139,92,255,.55), rgba(255,61,154,.55), transparent);
+      filter: blur(.1px);
+      opacity:.8;
+      pointer-events:none;
+    }
+
+    #fx{
+      position:fixed; inset:0; z-index:0;
+      width:100%; height:100%;
+    }
+
+    .wrap{
+      position:relative;
+      z-index:1;
+      max-width:var(--max);
+      margin:0 auto;
+      padding:22px 16px 54px;
+    }
+
     header{
-      position:sticky; top:0; z-index:10;
+      position:sticky; top:0;
+      z-index:10;
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
-      background: linear-gradient(180deg, rgba(7,10,18,.86), rgba(7,10,18,.44));
+      background: linear-gradient(180deg, rgba(7,10,18,.82), rgba(7,10,18,.45));
       border-bottom: 1px solid rgba(255,255,255,.08);
+      padding:12px 0;
+      margin:0 -16px 18px;
     }
-    .bar{
-      max-width: var(--max);
+
+    .nav{
+      max-width:var(--max);
       margin:0 auto;
-      padding: 12px 16px;
+      padding:0 16px;
       display:flex; align-items:center; justify-content:space-between; gap:12px;
     }
+
     .brand{
       display:flex; align-items:center; gap:10px;
       text-decoration:none; color:var(--text);
+      min-width:220px;
     }
+
     .logo{
-      width:34px; height:34px; border-radius:12px;
+      width:38px; height:38px; border-radius:12px;
       background:
         radial-gradient(circle at 30% 25%, rgba(255,255,255,.7), transparent 45%),
         conic-gradient(from 210deg, var(--glow2), var(--glow1), var(--glow3), var(--glow2));
       box-shadow: 0 0 0 1px rgba(255,255,255,.14), 0 15px 35px rgba(0,0,0,.45);
+      position:relative;
+      overflow:hidden;
     }
-    .brand strong{font-size:13px}
-    .brand small{display:block; color:var(--muted); font-family:var(--mono); font-size:11px; margin-top:2px}
-    nav{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end}
-    a.link{
-      text-decoration:none; color:var(--text);
+
+    .logo:after{
+      content:"";
+      position:absolute; inset:-50%;
+      background: radial-gradient(circle, rgba(255,255,255,.20), transparent 55%);
+      animation: spin 8s linear infinite;
+      transform-origin:center;
+    }
+
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .brand h1{
+      margin:0; font-size:14px; letter-spacing:.2px;
+      font-weight:700;
+      line-height:1.1;
+    }
+
+    .brand span{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      font-family: var(--mono);
+      opacity:.9;
+      margin-top:2px;
+    }
+
+    .links{
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
+    }
+
+    .chip{
+      text-decoration:none;
+      color:var(--text);
       font-size:13px;
       padding:9px 12px;
-      border-radius: 999px;
+      border-radius:999px;
       background: rgba(255,255,255,.06);
-      border: 1px solid rgba(255,255,255,.10);
+      border:1px solid rgba(255,255,255,.10);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      display:inline-flex; align-items:center; gap:8px;
+      user-select:none;
     }
-    a.link:hover{border-color: rgba(255,255,255,.18); background: rgba(255,255,255,.08)}
 
-    main{max-width: var(--max); margin:0 auto; padding: 18px 16px 50px}
+    .chip:hover{transform: translateY(-1px); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.18)}
+    .chip:active{transform: translateY(0px) scale(.99)}
+
+    .dot{
+      width:8px; height:8px; border-radius:99px;
+      background: linear-gradient(180deg, var(--glow2), var(--glow1));
+      box-shadow: 0 0 14px rgba(0,212,255,.45);
+    }
+
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
+      align-items:stretch;
+    }
+
+    @media (max-width: 920px){
+      .hero{grid-template-columns:1fr}
+      header{position:relative}
+    }
+
     .card{
       background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.04));
       border: 1px solid rgba(255,255,255,.10);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       overflow:hidden;
+      position:relative;
     }
-    .inner{padding: 18px}
-    h1{margin:0 0 10px; font-size: 22px; letter-spacing:.2px}
-    p{margin: 10px 0; color: var(--muted); line-height:1.7; font-size:14px}
 
-    .row{
-      display:grid; gap:12px;
-      grid-template-columns: 1fr 1fr;
-      margin-top: 14px;
+    .card .inner{
+      padding:18px 18px;
     }
-    @media (max-width: 820px){ .row{grid-template-columns:1fr} }
 
-    .box{
-      border-radius: 16px;
-      padding: 14px;
-      background: rgba(0,0,0,.22);
-      border: 1px solid rgba(255,255,255,.10);
+    .title{
+      margin:0 0 8px;
+      font-size:26px;
+      letter-spacing:.2px;
+      line-height:1.15;
     }
-    .box h2{margin:0 0 8px; font-size:14px}
+
+    .subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    .badgeRow{
+      margin-top:14px;
+      display:flex; flex-wrap:wrap; gap:10px;
+    }
+
+    .badge{
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.25);
+      font-size:12px;
+      color: rgba(255,255,255,.78);
+      display:inline-flex; gap:8px; align-items:center;
+    }
+
+    .badge i{
+      width:10px;height:10px;border-radius:99px; display:inline-block;
+      background: rgba(53,242,166,.95);
+      box-shadow: 0 0 14px rgba(53,242,166,.35);
+    }
+
+    .badge.warn i{background: rgba(255,209,102,.95); box-shadow: 0 0 14px rgba(255,209,102,.28)}
+    .badge.pink i{background: rgba(255,61,154,.95); box-shadow: 0 0 14px rgba(255,61,154,.28)}
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:14px;
+      margin-top:14px;
+    }
+
+    @media (max-width: 720px){
+      .grid{grid-template-columns:1fr}
+    }
+
+    .kpi{
+      display:flex; gap:12px; align-items:flex-start;
+      padding:14px 14px;
+      background: rgba(255,255,255,.05);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+    }
+
+    .kpi .num{
+      font-family: var(--mono);
+      font-weight: 800;
+      font-size: 18px;
+      color: rgba(255,255,255,.92);
+      min-width: 42px;
+      text-align:center;
+      padding: 6px 8px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+
+    .kpi h3{margin:0; font-size:13px; letter-spacing:.15px}
+    .kpi p{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.55}
+
+    .side .inner{padding:18px 18px}
+
+    .miniTitle{
+      margin:0;
+      font-size:14px;
+      letter-spacing:.2px;
+    }
+
     .mono{
       font-family: var(--mono);
+      color: rgba(255,255,255,.80);
+      word-break: break-word;
       font-size: 12px;
-      color: rgba(255,255,255,.74);
-      background: rgba(0,0,0,.24);
+      margin:8px 0 0;
+      background: rgba(0,0,0,.25);
       border: 1px solid rgba(255,255,255,.10);
       border-radius: 14px;
-      padding: 10px;
-      word-break: break-word;
+      padding: 10px 10px;
     }
 
-    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top: 10px;}
-    button.btn, a.btn{
+    .actions{
+      display:flex; flex-wrap:wrap; gap:10px;
+      margin-top:14px;
+    }
+
+    .btn{
       appearance:none; border:0; cursor:pointer;
-      border-radius: 16px;
-      padding: 12px 12px;
+      border-radius:16px;
+      padding:12px 12px;
       color: rgba(255,255,255,.92);
-      font-weight: 650;
-      font-size: 13px;
-      letter-spacing: .15px;
+      font-weight:650;
+      font-size:13px;
+      letter-spacing:.15px;
       background: linear-gradient(135deg, rgba(0,212,255,.18), rgba(139,92,255,.18));
       border: 1px solid rgba(255,255,255,.14);
+      transition: transform .15s ease, filter .15s ease, background .15s ease, border-color .15s ease;
       display:inline-flex; align-items:center; gap:10px;
       text-decoration:none;
     }
-    button.btn.secondary, a.btn.secondary{background: rgba(255,255,255,.06)}
-    button.btn:hover, a.btn:hover{filter:brightness(1.06)}
+
+    .btn:hover{transform: translateY(-1px); filter: brightness(1.06)}
+    .btn:active{transform: translateY(0px) scale(.99)}
+
+    .btn.secondary{
+      background: rgba(255,255,255,.06);
+    }
+
+    .btn .pill{
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.28);
+      border: 1px solid rgba(255,255,255,.10);
+      color: rgba(255,255,255,.78);
+    }
+
+    .faq{
+      margin-top:16px;
+      display:grid;
+      gap:10px;
+    }
 
     details{
       border: 1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
       border-radius: 16px;
       padding: 12px 12px;
-      margin-top: 10px;
     }
+
     summary{
       cursor:pointer;
-      font-weight: 650;
-      font-size: 13px;
+      font-weight:650;
+      font-size:13px;
       color: rgba(255,255,255,.86);
       list-style:none;
     }
+
     summary::-webkit-details-marker{display:none}
-    details p{margin: 10px 0 0; font-size: 13px}
+    details p{margin:10px 0 0; font-size:13px; color:var(--muted); line-height:1.6}
 
     .toast{
       position: fixed;
@@ -160,107 +343,251 @@
       pointer-events:none;
       transition: opacity .2s ease, transform .2s ease;
     }
-    .toast.show{opacity:1; transform: translateX(-50%) translateY(-2px);}
+
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-2px);
+    }
+
+    footer{
+      margin-top:18px;
+      padding:18px 10px 0;
+      color: rgba(255,255,255,.56);
+      font-size:12px;
+      text-align:center;
+    }
+
+    footer a{color: rgba(255,255,255,.78); text-decoration:none}
+    footer a:hover{text-decoration:underline}
   </style>
 </head>
 
 <body>
-<header>
-  <div class="bar">
-    <a class="brand" href="index.html">
-      <span class="logo" aria-hidden="true"></span>
-      <span>
-        <strong>Support</strong>
-        <small>Joker’s Crystal Rush · Developer hub 975</small>
-      </span>
-    </a>
-    <nav>
-      <a class="link" href="index.html">Home</a>
-      <a class="link" href="privacy.html">Privacy</a>
-      <a class="link" href="marketing.html">Marketing</a>
-    </nav>
-  </div>
-</header>
+  <div class="topline"></div>
+  <canvas id="fx" aria-hidden="true"></canvas>
 
-<main>
-  <section class="card">
-    <div class="inner">
-      <h1>Support</h1>
-      <p>
-        If you need help with Joker’s Crystal Rush, you can contact the developer directly.
-        This page is intended to give reviewers and users a clear support path.
-      </p>
-
-      <div class="row">
-        <div class="box">
-          <h2>Contact</h2>
-          <div class="mono" id="email">stopieddushku@gmail.com</div>
-          <div class="actions">
-            <button class="btn" id="copyBtn" type="button">Copy email</button>
-            <a class="btn secondary" href="mailto:stopieddushku@gmail.com?subject=Joker%E2%80%99s%20Crystal%20Rush%20-%20Support%20Request">Open email app</a>
-          </div>
-          <p style="margin-top:10px">
-            Please include: device model, Android version, app version, and steps to reproduce.
-          </p>
+  <header>
+    <div class="nav">
+      <a class="brand" href="index.html">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>Developer hub 975</h1>
+          <span>Joker’s Crystal Rush</span>
         </div>
+      </a>
 
-        <div class="box">
-          <h2>App identity</h2>
-          <div class="mono">
-            App: Joker’s Crystal Rush<br/>
-            Developer: Developer hub 975<br/>
-            Support email: stopieddushku@gmail.com<br/>
-            Privacy: No data collection, no tracking, no sharing
-          </div>
-          <div class="actions">
-            <a class="btn secondary" href="privacy.html">Read Privacy Policy</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="box" style="margin-top:12px;">
-        <h2>Quick troubleshooting</h2>
-
-        <details>
-          <summary>App is lagging or stuttering</summary>
-          <p>
-            Close other apps, reboot the device, and try again. If you can, share your device model and Android version.
-          </p>
-        </details>
-
-        <details>
-          <summary>Audio or vibration not working</summary>
-          <p>
-            Check system sound/vibration settings and in-app toggles. Some devices restrict haptics in power saving mode.
-          </p>
-        </details>
-
-        <details>
-          <summary>Progress reset</summary>
-          <p>
-            The app stores data locally on the device. Clearing app storage or reinstalling may reset progress.
-          </p>
-        </details>
-
-        <details>
-          <summary>Report a bug</summary>
-          <p>
-            Send an email with a clear description, exact steps, and screenshots if possible. I review every report personally.
-          </p>
-        </details>
-      </div>
-
-      <p style="margin-top:14px; color: rgba(255,255,255,.58); font-size:12px">
-        Support page is public and linked from the Home page for transparency.
-      </p>
+      <nav class="links" aria-label="Site navigation">
+        <a class="chip" href="index.html"><span class="dot"></span>Home</a>
+        <a class="chip" href="privacy.html"><span class="dot"></span>Privacy</a>
+        <a class="chip" href="marketing.html"><span class="dot"></span>Marketing</a>
+      </nav>
     </div>
-  </section>
-</main>
+  </header>
 
-<div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
+  <main class="wrap">
+    <section class="hero">
+      <article class="card">
+        <div class="inner">
+          <h2 class="title">Support</h2>
+          <p class="subtitle">
+            If you need help with Joker’s Crystal Rush, you can contact the developer directly. This page gives users and reviewers a clear support path.
+          </p>
+
+          <div class="badgeRow">
+            <span class="badge"><i></i>Direct email support</span>
+            <span class="badge"><i></i>Public support page</span>
+            <span class="badge"><i></i>Clear app identity</span>
+            <span class="badge warn"><i></i>Useful bug reports welcome</span>
+            <span class="badge pink"><i></i>Fast contact path</span>
+          </div>
+
+          <div class="grid" style="margin-top:16px;">
+            <div class="kpi">
+              <div class="num">01</div>
+              <div>
+                <h3>How to contact support</h3>
+                <p>Use the support email to reach the developer directly for bugs, questions, or technical issues related to the app.</p>
+              </div>
+            </div>
+
+            <div class="kpi">
+              <div class="num">02</div>
+              <div>
+                <h3>What to include</h3>
+                <p>For faster help, include your device model, Android version, app version, and clear steps to reproduce the issue.</p>
+              </div>
+            </div>
+
+            <div class="kpi">
+              <div class="num">03</div>
+              <div>
+                <h3>Identity consistency</h3>
+                <p>This page matches the developer identity, privacy page, and public site navigation for transparency and review clarity.</p>
+              </div>
+            </div>
+
+            <div class="kpi">
+              <div class="num">04</div>
+              <div>
+                <h3>Privacy promise</h3>
+                <p>Support is provided without changing the privacy-first approach: no data collection, no tracking, and no sharing.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="faq">
+            <details>
+              <summary>App is lagging or stuttering</summary>
+              <p>Close other apps, reboot the device, and try again. If possible, include your device model and Android version in your message.</p>
+            </details>
+
+            <details>
+              <summary>Audio or vibration not working</summary>
+              <p>Check system sound and vibration settings as well as any in-app toggles. Some devices limit haptics in power saving mode.</p>
+            </details>
+
+            <details>
+              <summary>Progress reset</summary>
+              <p>The app stores data locally on the device. Clearing app storage or reinstalling the app may reset saved progress.</p>
+            </details>
+
+            <details>
+              <summary>Report a bug</summary>
+              <p>Send an email with a short description, exact steps, and screenshots if possible. Reports are reviewed directly by the developer.</p>
+            </details>
+          </div>
+
+          <div class="actions">
+            <button class="btn" id="copyBtn" type="button">Copy email <span class="pill">one tap</span></button>
+            <a class="btn secondary" href="mailto:stopieddushku@gmail.com?subject=Joker%E2%80%99s%20Crystal%20Rush%20-%20Support%20Request">Open email app <span class="pill">mailto:</span></a>
+            <a class="btn secondary" href="privacy.html">Read Privacy Policy <span class="pill">privacy.html</span></a>
+          </div>
+        </div>
+      </article>
+
+      <aside class="card side">
+        <div class="inner">
+          <h3 class="miniTitle">Support contact</h3>
+          <div class="mono" id="email">stopieddushku@gmail.com</div>
+
+          <div style="margin-top:14px">
+            <h3 class="miniTitle">App identity</h3>
+            <div class="mono">
+              App: Joker’s Crystal Rush<br />
+              Developer: Developer hub 975<br />
+              Support email: stopieddushku@gmail.com<br />
+              Privacy: No data collection, no tracking, no sharing
+            </div>
+          </div>
+
+          <div class="actions">
+            <a class="btn" href="mailto:stopieddushku@gmail.com?subject=Joker%E2%80%99s%20Crystal%20Rush%20-%20Support%20Request">Email developer <span class="pill">direct</span></a>
+            <a class="btn secondary" href="index.html">Developer page</a>
+          </div>
+
+          <div style="margin-top:14px">
+            <h3 class="miniTitle">Quick links</h3>
+            <div class="actions">
+              <a class="btn secondary" href="index.html">Home</a>
+              <a class="btn secondary" href="privacy.html">Privacy</a>
+              <a class="btn secondary" href="marketing.html">Marketing</a>
+            </div>
+          </div>
+
+          <p class="subtitle" style="margin-top:14px">
+            This public page gives a direct and transparent support route for both users and reviewers.
+          </p>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      <div>
+        © <span id="year"></span> Developer hub 975 — Joker’s Crystal Rush.
+        <span style="opacity:.7">Public support page for transparency.</span>
+      </div>
+      <div style="margin-top:8px; opacity:.8">
+        <a href="index.html">Home</a> · <a href="privacy.html">Privacy</a> · <a href="marketing.html">Marketing</a>
+      </div>
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">Copied</div>
 
 <script>
+  const canvas = document.getElementById('fx');
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr;
+  const dots = [];
+  const DOTS = 64;
+
+  function resize(){
+    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+    w = canvas.width = Math.floor(window.innerWidth * dpr);
+    h = canvas.height = Math.floor(window.innerHeight * dpr);
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+  }
+
+  window.addEventListener('resize', resize, {passive:true});
+  resize();
+
+  function rand(min,max){ return Math.random()*(max-min)+min; }
+
+  function init(){
+    dots.length = 0;
+    for(let i=0;i<DOTS;i++){
+      dots.push({
+        x: rand(0,w), y: rand(0,h),
+        vx: rand(-.18,.18)*dpr, vy: rand(-.18,.18)*dpr,
+        r: rand(1.0, 2.2)*dpr,
+        a: rand(.08,.22)
+      });
+    }
+  }
+
+  init();
+
+  function draw(){
+    ctx.clearRect(0,0,w,h);
+
+    for(const p of dots){
+      p.x += p.vx;
+      p.y += p.vy;
+      if(p.x<0||p.x>w) p.vx*=-1;
+      if(p.y<0||p.y>h) p.vy*=-1;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,255,${p.a})`;
+      ctx.fill();
+    }
+
+    for(let i=0;i<dots.length;i++){
+      for(let j=i+1;j<dots.length;j++){
+        const a = dots[i], b = dots[j];
+        const dx = a.x-b.x, dy = a.y-b.y;
+        const dist = Math.sqrt(dx*dx+dy*dy);
+        const max = 160*dpr;
+        if(dist < max){
+          const t = 1 - dist/max;
+          ctx.strokeStyle = `rgba(0,212,255,${0.12*t})`;
+          ctx.lineWidth = 1*dpr;
+          ctx.beginPath();
+          ctx.moveTo(a.x,a.y);
+          ctx.lineTo(b.x,b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+
   const toast = document.getElementById('toast');
+
   function showToast(msg){
     toast.textContent = msg;
     toast.classList.add('show');
@@ -283,6 +610,8 @@
       showToast('Email copied');
     }
   });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 </body>
 </html>
